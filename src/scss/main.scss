@@ -1,0 +1,176 @@
+$generalColor: #FF4F5A;
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#sidebar {
+    background-color: #f0ebeb;
+    padding: 40px 10px;
+    height: 100vh;
+    ul {
+        position: fixed;
+        top: 46px;
+    }
+    .side-item-2, .side-item-1, .side-item-3{
+        color: #FF4F5A !important;
+        font-weight: 500;
+    }
+    .sidebar-item {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        margin-bottom: 10px;
+
+        a {
+            text-decoration: none;
+            color: #6B6B6B;
+        }
+
+        img {
+            margin-right: 4px;
+        }
+    }
+}
+
+#content {
+    padding: 40px;
+    .todo-item {
+        list-style: none;
+    }
+    .todo-item-border {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #E3E3E3;
+    }
+
+    .content-title {
+        color: $generalColor;
+    }
+
+    .edit-todo {
+        cursor: pointer;
+    }
+    .todo-title {
+        font-weight: 500;
+    }
+    .todo-desc {
+        opacity: 0.8;
+    }
+    .add-todo {
+        color: $generalColor;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+#body-overlay {
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+// Menu 
+
+.real-menu {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    z-index: 4;
+    width: 300px;
+    height: 100%;
+    padding: 80px 20px;
+    box-shadow: 0 6px 12px rgba(107, 82, 82, 0.3);
+    background-color: white;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    transition: ease 0.2s all;
+    .todo-title-input, .todo-desc-input {
+        border: 1px solid $generalColor;
+        border-radius: 4px;
+        padding: 3px 9px;
+    }
+    .todo-title-input:focus, .todo-desc-input:focus {
+        outline: none;
+    }
+    #todo-submit-button {
+        border: 1px solid $generalColor;
+        background-color: #fff;
+        color: $generalColor;
+        border-radius: 4px;
+    }
+}
+
+
+body {
+
+    &.menu-open{
+        #body-overlay {
+            display: block;
+        }
+    }
+
+    &.menu-open {
+        .real-menu {
+            right: 0;
+        }
+    }
+}
+
+
+
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+
+    .dropbtn {
+        width: 160px;
+        background-color: #04AA6D;
+        color: white;
+        padding: 6px;
+        font-size: 16px;
+        border: none;
+      }
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        span {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+          }
+      }
+  }
+  
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+@media(max-width: 800px) {
+    #sidebar {
+        height: 20vh;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        ul {
+            position: static;
+        }
+    }
+}
