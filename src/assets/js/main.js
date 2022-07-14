@@ -2,17 +2,18 @@ let todoItemsToDoStorage = JSON.parse(localStorage.getItem('todo')) || []
 let completedToDoStorage = JSON.parse(localStorage.getItem("completedTodo")) || [];
 let inProgressToDoStorage = JSON.parse(localStorage.getItem("inProgressTodo")) || [];
 const todoContent = document.querySelector('#todo-content');
-const todoCompletedContent = document.querySelector("#todo-completed-content")
-const todoInProgressContent = document.querySelector("#todo-inprogress-content")
+const todoCompletedContent = document.querySelector("#todo-completed-content");
+const todoInProgressContent = document.querySelector("#todo-inprogress-content");
 const addButton = document.querySelector('#todo-submit-button');
 let todoCompleted = document.getElementsByClassName('completed-todo');
 let rollBackToDo = document.getElementsByClassName('rollback');
 let inProgressButton = document.getElementsByClassName('inprogress-todo');
+const errorMessage = document.querySelector(".error-message");
 
-completedToDo();
 saveToDo();
 inProgressToDo();
 getInProgress();
+completedToDo();
 
 function hasClass(ele, cls) {
     return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
@@ -62,7 +63,6 @@ function addToDo() {
      </div>
      <div class="edit-todo d-flex align-items-center">
      <img src="assets/images/inprogress.jpg" class="d-block inprogress-todo" width="55px">
-     <img src="assets/images/completed.png" class="d-block completed-todo" width="55px">
      </div>
      </div>
      `
@@ -83,7 +83,6 @@ function saveToDo() {
         </div>
         <div class="edit-todo d-flex align-items-center">
         <img src="assets/images/inprogress.jpg" class="d-block inprogress-todo" width="55px">
-        <img src="assets/images/completed.png" class="d-block completed-todo" width="55px">
         </div>
         </div>
         `
@@ -92,25 +91,13 @@ function saveToDo() {
     }
 }
 
-
 addButton && addButton.addEventListener("click", function () {
-    addToDo();
+    if(!this.parentNode.previousElementSibling.value == ""){
+        addToDo();
+    }else {
+        error();
+    }
 })
-
-for (let i = 0; i < todoCompleted.length; i++) {
-    todoCompleted[i].addEventListener("click", function () {
-        let txt = this.parentNode.parentNode.innerText;
-        let el = this.parentNode.parentNode
-        let ind = todoItemsToDoStorage.indexOf(txt);
-        todoItemsToDoStorage.splice(ind, 1);
-        localStorage.setItem("todo", JSON.stringify(todoItemsToDoStorage));
-        inProgressToDoStorage.splice(ind, 1);   
-        localStorage.setItem("inProgressTodo", JSON.stringify(inProgressToDoStorage));
-        el.remove();
-        completedToDoStorage.push(txt);
-        localStorage.setItem('completedTodo', JSON.stringify(completedToDoStorage));
-    })
-}
 
 function completedToDo() {
     for (let i = 0; i < completedToDoStorage.length; i++) {
@@ -131,6 +118,18 @@ function completedToDo() {
     }
 }
 
+for (let i = 0; i < todoCompleted.length; i++) {
+    todoCompleted[i].addEventListener("click", function () {
+        let txt = this.parentNode.parentNode.innerText;
+        let el = this.parentNode.parentNode
+        let ind = todoItemsToDoStorage.indexOf(txt);
+        inProgressToDoStorage.splice(ind, 1);
+        localStorage.setItem("inProgressTodo", JSON.stringify(inProgressToDoStorage));
+        el.remove();
+        completedToDoStorage.push(txt);
+        localStorage.setItem('completedTodo', JSON.stringify(completedToDoStorage));
+    })
+}
 
 for (let i = 0; i < rollBackToDo.length; i++) {
     rollBackToDo[i].addEventListener("click", function () {
@@ -180,3 +179,6 @@ function getInProgress() {
     }
 }
 
+function error(){
+    errorMessage.style.display = "block";
+}
